@@ -442,6 +442,14 @@ h1 {
     rgba(26, 12, 18, 0.94);
 }
 
+.projection-overlay:fullscreen {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+}
+
 .projection-overlay[hidden] {
   display: none;
 }
@@ -463,6 +471,7 @@ h1 {
   object-position: center;
   border-radius: 8px;
   opacity: 0;
+  transform: scale(0.985);
   filter: drop-shadow(0 28px 40px rgba(0, 0, 0, 0.45));
   transition:
     opacity 520ms ease,
@@ -488,6 +497,39 @@ h1 {
   font-size: 1.1rem;
   font-weight: 900;
   cursor: pointer;
+}
+
+.projection-nav {
+  position: fixed;
+  top: 50%;
+  z-index: 4;
+  width: clamp(46px, 6vw, 68px);
+  height: clamp(46px, 6vw, 68px);
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.36);
+  border-radius: 999px;
+  color: #ffffff;
+  background: rgba(125, 59, 104, 0.72);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  transform: translateY(-50%);
+  backdrop-filter: blur(8px);
+}
+
+.projection-nav:hover {
+  background: rgba(200, 63, 111, 0.82);
+}
+
+.projection-prev {
+  left: clamp(10px, 2vw, 28px);
+}
+
+.projection-next {
+  right: clamp(10px, 2vw, 28px);
 }
 
 .projection-empty,
@@ -749,6 +791,12 @@ h1 {
   .projection-close {
     top: 10px;
     right: 10px;
+  }
+
+  .projection-nav {
+    width: 42px;
+    height: 42px;
+    font-size: 2rem;
   }
 
   .final-note {

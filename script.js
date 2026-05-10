@@ -18,6 +18,8 @@ const projectionPhoto = document.querySelector("#projectionPhoto");
 const projectionEmpty = document.querySelector("#projectionEmpty");
 const finalNote = document.querySelector("#finalNote");
 const closeProjection = document.querySelector("#closeProjection");
+const projectionPrev = document.querySelector("#projectionPrev");
+const projectionNext = document.querySelector("#projectionNext");
 
 const dbName = "regalo-mama";
 const storeName = "photos";
@@ -72,9 +74,13 @@ function fitProjectionPhoto() {
   }
 
   const viewport = window.visualViewport;
-  const screenWidth = viewport?.width ?? window.innerWidth;
-  const screenHeight = viewport?.height ?? window.innerHeight;
-  const safeInset = Math.max(18, Math.min(screenWidth, screenHeight) * 0.045);
+  const screenWidth = document.fullscreenElement
+    ? window.innerWidth
+    : viewport?.width ?? window.innerWidth;
+  const screenHeight = document.fullscreenElement
+    ? window.innerHeight
+    : viewport?.height ?? window.innerHeight;
+  const safeInset = Math.max(34, Math.min(screenWidth, screenHeight) * 0.055);
   const maxWidth = Math.max(240, screenWidth - safeInset * 2);
   const maxHeight = Math.max(240, screenHeight - safeInset * 2);
   const imageRatio = projectionPhoto.naturalWidth / projectionPhoto.naturalHeight;
@@ -91,6 +97,8 @@ function fitProjectionPhoto() {
 
   projectionPhoto.style.width = `${Math.floor(width)}px`;
   projectionPhoto.style.height = `${Math.floor(height)}px`;
+  projectionPhoto.style.maxWidth = `${Math.floor(maxWidth)}px`;
+  projectionPhoto.style.maxHeight = `${Math.floor(maxHeight)}px`;
 }
 
 const supportedImageFile = (file) =>
@@ -322,6 +330,7 @@ function showProjectionPhoto(index) {
   projectionEmpty.hidden = true;
   finalNote.hidden = true;
   projectionPhoto.classList.remove("is-visible");
+  projectionPhoto.removeAttribute("style");
 
   window.setTimeout(() => {
     projectionPhoto.onload = () => {
@@ -335,6 +344,16 @@ function showProjectionPhoto(index) {
       projectionPhoto.classList.add("is-visible");
     }
   }, 120);
+}
+
+function showProjectionStep(offset) {
+  if (!photos.length) {
+    return;
+  }
+
+  window.clearTimeout(projectionTimerId);
+  showProjectionPhoto(projectionIndex + offset + photos.length);
+  scheduleProjection();
 }
 
 function scheduleProjection() {
@@ -366,7 +385,16 @@ function openProjection() {
   scheduleProjection();
 
   if (projectionOverlay.requestFullscreen) {
-    projectionOverlay.requestFullscreen().catch(() => {});
+    projectionOverlay
+      .requestFullscreen()
+      .then(() => {
+        setViewportSize();
+        fitProjectionPhoto();
+      })
+      .catch(() => {
+        setViewportSize();
+        fitProjectionPhoto();
+      });
   }
 }
 
@@ -427,11 +455,26 @@ startButton.addEventListener("click", () => {
 
 projectButton.addEventListener("click", openProjection);
 closeProjection.addEventListener("click", closeProjectionView);
+projectionPrev.addEventListener("click", () => showProjectionStep(-1));
+projectionNext.addEventListener("click", () => showProjectionStep(1));
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && !projectionOverlay.hidden) {
     closeProjectionView();
   }
+
+  if (event.key === "ArrowLeft" && !projectionOverlay.hidden) {
+    showProjectionStep(-1);
+  }
+
+  if (event.key === "ArrowRight" && !projectionOverlay.hidden) {
+    showProjectionStep(1);
+  }
+});
+
+document.addEventListener("fullscreenchange", () => {
+  setViewportSize();
+  window.setTimeout(fitProjectionPhoto, 80);
 });
 
 setViewportSize();
