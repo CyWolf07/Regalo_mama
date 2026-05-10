@@ -14,6 +14,12 @@ png, jpg, jpeg, jpe, webp, gif, bmp, avif, svg, tif, tiff, heic, heif
 Las fotos se guardan en el historial del navegador con IndexedDB. Si cierras y
 vuelves a abrir la pagina en el mismo navegador, el carrusel seguira creado.
 
+## Proyectar fotos
+
+Despues de subir fotos, usa el boton `Proyectar` para verlas en pantalla
+completa. La proyeccion muestra cada imagen completa sin recortarla, aunque las
+fotos tengan tamanos u orientaciones diferentes.
+
 ## Agregar fotos desde la carpeta
 
 Pon las fotos dentro de `assets/photos` con estos nombres:

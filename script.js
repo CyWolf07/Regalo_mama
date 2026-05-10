@@ -10,6 +10,14 @@ const clearButton = document.querySelector("#clearButton");
 const historyStrip = document.querySelector("#historyStrip");
 const photoStage = document.querySelector(".photo-stage");
 const photoMessage = document.querySelector(".photo-message");
+const welcomeOverlay = document.querySelector("#welcomeOverlay");
+const startButton = document.querySelector("#startButton");
+const projectButton = document.querySelector("#projectButton");
+const projectionOverlay = document.querySelector("#projectionOverlay");
+const projectionPhoto = document.querySelector("#projectionPhoto");
+const projectionEmpty = document.querySelector("#projectionEmpty");
+const finalNote = document.querySelector("#finalNote");
+const closeProjection = document.querySelector("#closeProjection");
 
 const dbName = "regalo-mama";
 const storeName = "photos";
@@ -42,6 +50,8 @@ let photos = [];
 let current = 0;
 let timerId;
 let db;
+let projectionIndex = 0;
+let projectionTimerId;
 
 const supportedImageFile = (file) =>
   file.type.startsWith("image/") ||
@@ -224,6 +234,7 @@ function updateEmptyState() {
   photoMessage.hidden = photos.length === 0;
   photoStage.classList.toggle("has-photos", photos.length > 0);
   clearButton.disabled = !photos.some((photo) => photo.saved);
+  projectButton.disabled = photos.length === 0;
 }
 
 function showPhoto(nextIndex) {
@@ -255,6 +266,74 @@ function restartAutoplay() {
 
   if (photos.length > 1) {
     timerId = window.setInterval(() => showPhoto(current + 1), 5200);
+  }
+}
+
+function showProjectionPhoto(index) {
+  if (!photos.length) {
+    projectionPhoto.hidden = true;
+    projectionEmpty.hidden = false;
+    finalNote.hidden = true;
+    return;
+  }
+
+  projectionIndex = index % photos.length;
+  projectionPhoto.hidden = false;
+  projectionEmpty.hidden = true;
+  finalNote.hidden = true;
+  projectionPhoto.classList.remove("is-visible");
+
+  window.setTimeout(() => {
+    projectionPhoto.onload = () => {
+      projectionPhoto.classList.add("is-visible");
+    };
+    projectionPhoto.src = photos[projectionIndex].src;
+
+    if (projectionPhoto.complete) {
+      projectionPhoto.classList.add("is-visible");
+    }
+  }, 120);
+}
+
+function scheduleProjection() {
+  window.clearTimeout(projectionTimerId);
+  projectionTimerId = window.setTimeout(() => {
+    if (!photos.length || projectionOverlay.hidden) {
+      return;
+    }
+
+    if (projectionIndex >= photos.length - 1) {
+      finalNote.hidden = false;
+      projectionTimerId = window.setTimeout(() => {
+        showProjectionPhoto(0);
+        scheduleProjection();
+      }, 5200);
+      return;
+    }
+
+    showProjectionPhoto(projectionIndex + 1);
+    scheduleProjection();
+  }, 4200);
+}
+
+function openProjection() {
+  projectionOverlay.hidden = false;
+  projectionIndex = Math.max(current, 0);
+  showProjectionPhoto(projectionIndex);
+  scheduleProjection();
+
+  if (projectionOverlay.requestFullscreen) {
+    projectionOverlay.requestFullscreen().catch(() => {});
+  }
+}
+
+function closeProjectionView() {
+  window.clearTimeout(projectionTimerId);
+  projectionOverlay.hidden = true;
+  finalNote.hidden = true;
+
+  if (document.fullscreenElement) {
+    document.exitFullscreen().catch(() => {});
   }
 }
 
@@ -297,6 +376,19 @@ clearButton.addEventListener("click", async () => {
   await clearSavedPhotos();
   current = 0;
   await loadPhotos();
+});
+
+startButton.addEventListener("click", () => {
+  welcomeOverlay.classList.add("is-hidden");
+});
+
+projectButton.addEventListener("click", openProjection);
+closeProjection.addEventListener("click", closeProjectionView);
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !projectionOverlay.hidden) {
+    closeProjectionView();
+  }
 });
 
 quoteText.style.transition = "opacity 180ms ease";

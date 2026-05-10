@@ -19,6 +19,17 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <div class="welcome-overlay" id="welcomeOverlay">
+      <section class="welcome-card" aria-label="Mensaje de entrada">
+        <p class="welcome-kicker">Un regalo para mama</p>
+        <h2>LISTA PARA RECORDAR TU AVENTURA?</h2>
+        <p class="welcome-signature">atte: tu bbe</p>
+        <button class="primary-button" id="startButton" type="button">
+          Iniciar
+        </button>
+      </section>
+    </div>
+
     <main class="page-shell">
       <section class="hero" aria-label="Regalo del Dia de las Madres">
         <div class="hero-copy">
@@ -73,6 +84,9 @@
         </div>
         <div class="upload-actions">
           <label class="upload-button" for="photoUpload">Subir fotos</label>
+          <button class="primary-button compact-button" id="projectButton" type="button">
+            Proyectar
+          </button>
           <input
             id="photoUpload"
             type="file"
@@ -103,6 +117,25 @@
         </div>
       </section>
     </main>
+
+    <div class="projection-overlay" id="projectionOverlay" hidden>
+      <button class="projection-close" id="closeProjection" type="button" aria-label="Cerrar proyeccion">
+        x
+      </button>
+      <div class="projection-stage">
+        <img id="projectionPhoto" alt="Foto proyectada del carrusel" />
+        <div class="projection-empty" id="projectionEmpty">
+          <span>Sube fotos primero para iniciar la proyeccion.</span>
+        </div>
+        <section class="final-note" id="finalNote" hidden>
+          <p>
+            Muchas gracias por estar con nosotros mami, eres la mejor, y
+            queremos que nos dures toda la vida para que nos digas
+            "si lo encuentro que te hago?"
+          </p>
+        </section>
+      </div>
+    </div>
 
     <script src="./script.js"></script>
   </body>
