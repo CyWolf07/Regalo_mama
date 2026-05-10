@@ -8,6 +8,8 @@ const nextButton = document.querySelector("#nextButton");
 const photoUpload = document.querySelector("#photoUpload");
 const clearButton = document.querySelector("#clearButton");
 const historyStrip = document.querySelector("#historyStrip");
+const photoStage = document.querySelector(".photo-stage");
+const photoMessage = document.querySelector(".photo-message");
 
 const dbName = "regalo-mama";
 const storeName = "photos";
@@ -176,6 +178,9 @@ function renderHistory() {
   savedPhotos.forEach((photo) => {
     const item = document.createElement("button");
     item.className = "history-item";
+    if (photo.id === photos[current]?.id) {
+      item.classList.add("is-active");
+    }
     item.type = "button";
     item.setAttribute("aria-label", `Ver ${photo.name}`);
 
@@ -216,6 +221,8 @@ function renderHistory() {
 function updateEmptyState() {
   emptyState.hidden = photos.length > 0;
   photoElement.hidden = photos.length === 0;
+  photoMessage.hidden = photos.length === 0;
+  photoStage.classList.toggle("has-photos", photos.length > 0);
   clearButton.disabled = !photos.some((photo) => photo.saved);
 }
 
@@ -238,6 +245,7 @@ function showPhoto(nextIndex) {
     photoElement.src = photos[current].src;
     updateCounter();
     updateEmptyState();
+    renderHistory();
     setQuote(current);
   }, 260);
 }

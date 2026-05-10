@@ -8,8 +8,14 @@
       content="Un regalo digital para celebrar el amor de mama en el Dia de las Madres."
     />
     <title>Para Mama | Feliz Dia de las Madres</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://www.youtube.com" />
     <link rel="preconnect" href="https://i.ytimg.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Birthstone&family=Nunito:wght@400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -29,6 +35,11 @@
             <div class="glow glow-one"></div>
             <div class="glow glow-two"></div>
             <img id="currentPhoto" alt="Recuerdo familiar" />
+            <div class="photo-message" aria-label="Frase para mama">
+              <p id="quoteText">
+                Mama, tu amor es la primera luz que aprendi a reconocer.
+              </p>
+            </div>
             <div id="emptyState" class="empty-state">
               <span>Sube tus fotos aqui</span>
               <strong>PNG, JPG, JPEG, JPE, WEBP, GIF...</strong>
@@ -73,12 +84,6 @@
           </button>
         </div>
         <div class="history-strip" id="historyStrip" aria-label="Historial de fotos"></div>
-      </section>
-
-      <section class="message-band" aria-label="Frases para mama">
-        <p id="quoteText">
-          Mama, tu amor es la primera luz que aprendi a reconocer.
-        </p>
       </section>
 
       <section class="music-panel" aria-label="Musica de fondo">
