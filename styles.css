@@ -292,31 +292,6 @@ h1 {
   text-shadow: 0 8px 24px rgba(200, 63, 111, 0.16);
 }
 
-.empty-state {
-  position: absolute;
-  inset: 18px;
-  z-index: 5;
-  display: grid;
-  place-content: center;
-  gap: 8px;
-  padding: 28px;
-  border: 1px dashed rgba(117, 95, 87, 0.46);
-  border-radius: 6px;
-  color: var(--muted);
-  text-align: center;
-  background: rgba(255, 249, 244, 0.68);
-}
-
-.empty-state strong {
-  color: var(--rose);
-  font-size: 1.35rem;
-}
-
-.empty-state small {
-  color: var(--gold);
-  font-weight: 700;
-}
-
 .carousel-controls {
   display: flex;
   align-items: center;
@@ -778,8 +753,7 @@ h1 {
     min-height: 340px;
   }
 
-  .photo-stage img,
-  .empty-state {
+  .photo-stage img {
     inset: 10px;
   }
 

@@ -1,5 +1,4 @@
 const photoElement = document.querySelector("#currentPhoto");
-const emptyState = document.querySelector("#emptyState");
 const photoIndex = document.querySelector("#photoIndex");
 const photoTotal = document.querySelector("#photoTotal");
 const quoteText = document.querySelector("#quoteText");
@@ -248,7 +247,6 @@ function renderHistory() {
 }
 
 function updateEmptyState() {
-  emptyState.hidden = photos.length > 0;
   photoElement.hidden = photos.length === 0;
   photoMessage.hidden = photos.length === 0;
   photoStage.classList.toggle("has-photos", photos.length > 0);
@@ -470,7 +468,6 @@ openDatabase()
     return loadPhotos();
   })
   .catch(() => {
-    emptyState.innerHTML =
-      "<span>No se pudo abrir el historial</span><strong>Usa la carpeta assets/photos</strong>";
+    console.warn("No se pudo abrir el historial. Usa la carpeta assets/photos.");
     updateEmptyState();
   });
