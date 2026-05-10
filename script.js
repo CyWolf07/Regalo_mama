@@ -69,36 +69,7 @@ function setViewportSize() {
 }
 
 function fitProjectionPhoto() {
-  if (!projectionPhoto.naturalWidth || !projectionPhoto.naturalHeight) {
-    return;
-  }
-
-  const viewport = window.visualViewport;
-  const screenWidth = document.fullscreenElement
-    ? window.innerWidth
-    : viewport?.width ?? window.innerWidth;
-  const screenHeight = document.fullscreenElement
-    ? window.innerHeight
-    : viewport?.height ?? window.innerHeight;
-  const safeInset = Math.max(34, Math.min(screenWidth, screenHeight) * 0.055);
-  const maxWidth = Math.max(240, screenWidth - safeInset * 2);
-  const maxHeight = Math.max(240, screenHeight - safeInset * 2);
-  const imageRatio = projectionPhoto.naturalWidth / projectionPhoto.naturalHeight;
-  const boxRatio = maxWidth / maxHeight;
-
-  let width = maxWidth;
-  let height = maxHeight;
-
-  if (imageRatio > boxRatio) {
-    height = width / imageRatio;
-  } else {
-    width = height * imageRatio;
-  }
-
-  projectionPhoto.style.width = `${Math.floor(width)}px`;
-  projectionPhoto.style.height = `${Math.floor(height)}px`;
-  projectionPhoto.style.maxWidth = `${Math.floor(maxWidth)}px`;
-  projectionPhoto.style.maxHeight = `${Math.floor(maxHeight)}px`;
+  projectionPhoto.removeAttribute("style");
 }
 
 const supportedImageFile = (file) =>

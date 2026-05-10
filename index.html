@@ -46,16 +46,16 @@
             <div class="glow glow-one"></div>
             <div class="glow glow-two"></div>
             <img id="currentPhoto" alt="Recuerdo familiar" />
-            <div class="photo-message" aria-label="Frase para mama">
-              <p id="quoteText">
-                Mama, tu amor es la primera luz que aprendi a reconocer.
-              </p>
-            </div>
             <div id="emptyState" class="empty-state">
               <span>Sube tus fotos aqui</span>
               <strong>PNG, JPG, JPEG, JPE, WEBP, GIF...</strong>
               <small>El carrusel queda guardado en este navegador.</small>
             </div>
+          </div>
+          <div class="photo-message" aria-label="Frase para mama">
+            <p id="quoteText">
+              Mama, tu amor es la primera luz que aprendi a reconocer.
+            </p>
           </div>
 
           <div class="carousel-controls">
@@ -123,7 +123,9 @@
         x
       </button>
       <div class="projection-stage">
-        <img id="projectionPhoto" alt="Foto proyectada del carrusel" />
+        <div class="projection-frame">
+          <img id="projectionPhoto" alt="Foto proyectada del carrusel" />
+        </div>
         <button class="projection-nav projection-prev" id="projectionPrev" type="button" aria-label="Foto anterior">
           &lsaquo;
         </button>

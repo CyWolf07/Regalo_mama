@@ -21,6 +21,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 body {
   min-height: 100vh;
   margin: 0;
@@ -226,7 +230,6 @@ h1 {
   object-fit: contain;
   object-position: center;
   border-radius: 6px;
-  background: rgba(255, 248, 248, 0.54);
   box-shadow: 0 20px 54px rgba(95, 36, 60, 0.24);
   opacity: 0;
   transform: translate(-50%, -50%) scale(1.04);
@@ -270,20 +273,14 @@ h1 {
 }
 
 .photo-message {
-  position: absolute;
-  right: 18px;
-  bottom: 18px;
-  left: 18px;
-  z-index: 4;
-  padding: 18px 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.42);
-  border-radius: 0 0 6px 6px;
-  color: #ffffff;
+  padding: 16px 20px;
+  border: 1px solid rgba(200, 63, 111, 0.2);
+  border-radius: 8px;
+  color: var(--plum);
   background:
-    linear-gradient(180deg, transparent, rgba(58, 25, 35, 0.76)),
-    linear-gradient(90deg, rgba(200, 63, 111, 0.72), rgba(125, 59, 104, 0.58));
-  backdrop-filter: blur(8px);
-  transform: translateY(0);
+    linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(255, 215, 223, 0.34)),
+    rgba(255, 255, 255, 0.64);
+  box-shadow: 0 14px 40px rgba(83, 47, 39, 0.08);
   animation: messageLift 700ms 260ms ease both;
 }
 
@@ -292,7 +289,7 @@ h1 {
   font-family: "Birthstone", Georgia, "Times New Roman", serif;
   font-size: clamp(2rem, 4.3vw, 3.4rem);
   line-height: 0.95;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.28);
+  text-shadow: 0 8px 24px rgba(200, 63, 111, 0.16);
 }
 
 .empty-state {
@@ -450,6 +447,11 @@ h1 {
   min-height: 100vh;
 }
 
+.projection-overlay:fullscreen .projection-frame {
+  width: calc(100vw - 96px);
+  height: calc(100vh - 96px);
+}
+
 .projection-overlay[hidden] {
   display: none;
 }
@@ -463,10 +465,21 @@ h1 {
   overflow: hidden;
 }
 
-.projection-stage img {
+.projection-frame {
+  width: min(calc(100vw - 88px), 1600px);
+  height: min(calc(100vh - 88px), 980px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.projection-frame img {
   display: block;
-  max-width: calc(var(--app-width) - 36px);
-  max-height: calc(var(--app-height) - 36px);
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
   object-position: center;
   border-radius: 8px;
@@ -478,7 +491,7 @@ h1 {
     transform 720ms ease;
 }
 
-.projection-stage img.is-visible {
+.projection-frame img.is-visible {
   opacity: 1;
   transform: scale(1);
 }
@@ -766,7 +779,6 @@ h1 {
   }
 
   .photo-stage img,
-  .photo-message,
   .empty-state {
     inset: 10px;
   }
@@ -779,13 +791,17 @@ h1 {
   }
 
   .photo-message {
-    top: auto;
     padding: 12px 14px;
   }
 
   .projection-stage {
     width: 100%;
     height: 100%;
+  }
+
+  .projection-frame {
+    width: calc(100vw - 48px);
+    height: calc(100vh - 72px);
   }
 
   .projection-close {
