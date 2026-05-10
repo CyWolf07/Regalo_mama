@@ -30,15 +30,15 @@
             <div class="glow glow-two"></div>
             <img id="currentPhoto" alt="Recuerdo familiar" />
             <div id="emptyState" class="empty-state">
-              <span>Agrega tus fotos en</span>
-              <strong>assets/photos</strong>
-              <small>foto-1.jpg, foto-2.jpg, foto-3.jpg...</small>
+              <span>Sube tus fotos aqui</span>
+              <strong>PNG, JPG, JPEG, JPE, WEBP, GIF...</strong>
+              <small>El carrusel queda guardado en este navegador.</small>
             </div>
           </div>
 
           <div class="carousel-controls">
             <button class="icon-button" id="prevButton" type="button" aria-label="Foto anterior">
-              <span aria-hidden="true">‹</span>
+              <span aria-hidden="true">&lsaquo;</span>
             </button>
             <div class="counter" aria-live="polite">
               <span id="photoIndex">0</span>
@@ -46,10 +46,33 @@
               <span id="photoTotal">0</span>
             </div>
             <button class="icon-button" id="nextButton" type="button" aria-label="Siguiente foto">
-              <span aria-hidden="true">›</span>
+              <span aria-hidden="true">&rsaquo;</span>
             </button>
           </div>
         </section>
+      </section>
+
+      <section class="upload-panel" aria-label="Subir fotos al carrusel">
+        <div>
+          <p class="panel-title">Tus fotos del carrusel</p>
+          <p class="panel-copy">
+            Selecciona imagenes desde tu computador. Se guardan en el historial
+            de este navegador para que el regalo siga listo al volver a abrirlo.
+          </p>
+        </div>
+        <div class="upload-actions">
+          <label class="upload-button" for="photoUpload">Subir fotos</label>
+          <input
+            id="photoUpload"
+            type="file"
+            accept="image/*,.jpg,.jpeg,.jpe,.png,.webp,.gif,.bmp,.avif,.svg,.tif,.tiff,.heic,.heif"
+            multiple
+          />
+          <button class="ghost-button" id="clearButton" type="button">
+            Borrar historial
+          </button>
+        </div>
+        <div class="history-strip" id="historyStrip" aria-label="Historial de fotos"></div>
       </section>
 
       <section class="message-band" aria-label="Frases para mama">

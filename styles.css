@@ -31,6 +31,11 @@ button {
   font: inherit;
 }
 
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
 .page-shell {
   width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
@@ -212,6 +217,124 @@ h1 {
   text-align: center;
 }
 
+.upload-panel {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) auto;
+  align-items: start;
+  gap: 18px 24px;
+  margin: 6px 0 26px;
+  padding: 20px;
+  border: 1px solid rgba(200, 86, 105, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.68);
+  box-shadow: 0 14px 40px rgba(83, 47, 39, 0.08);
+}
+
+.upload-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.upload-actions input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.upload-button,
+.ghost-button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.upload-button {
+  border: 1px solid rgba(200, 86, 105, 0.32);
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--rose), var(--coral));
+  box-shadow: 0 12px 28px rgba(200, 86, 105, 0.22);
+}
+
+.ghost-button {
+  border: 1px solid rgba(117, 95, 87, 0.24);
+  color: var(--muted);
+  background: rgba(255, 249, 244, 0.86);
+}
+
+.history-strip {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  gap: 12px;
+}
+
+.history-empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.history-wrapper {
+  position: relative;
+  min-width: 0;
+}
+
+.history-item {
+  width: 100%;
+  display: grid;
+  gap: 7px;
+  padding: 7px;
+  border: 1px solid rgba(117, 95, 87, 0.18);
+  border-radius: 8px;
+  color: var(--ink);
+  background: rgba(255, 249, 244, 0.78);
+  text-align: left;
+  cursor: pointer;
+}
+
+.history-item img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 6px;
+  background: #f5e8df;
+}
+
+.history-item span {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.remove-photo {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(200, 86, 105, 0.28);
+  border-radius: 999px;
+  color: #ffffff;
+  background: var(--rose);
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(200, 86, 105, 0.26);
+}
+
 .message-band {
   margin: 10px 0 26px;
   padding: 24px clamp(18px, 4vw, 46px);
@@ -311,5 +434,13 @@ h1 {
 
   .music-panel {
     grid-template-columns: 1fr;
+  }
+
+  .upload-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .upload-actions {
+    justify-content: flex-start;
   }
 }
