@@ -435,7 +435,7 @@ h1 {
   width: var(--app-width);
   height: var(--app-height);
   min-height: 100dvh;
-  padding: clamp(10px, 2vw, 24px);
+  padding: 0;
   background:
     radial-gradient(circle at 18% 20%, rgba(255, 215, 223, 0.22), transparent 28%),
     radial-gradient(circle at 84% 82%, rgba(255, 244, 216, 0.2), transparent 34%),
@@ -448,8 +448,8 @@ h1 {
 
 .projection-stage {
   position: relative;
-  width: min(calc(var(--app-width) - 24px), 1500px);
-  height: min(calc(var(--app-height) - 24px), 920px);
+  width: 100%;
+  height: 100%;
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -457,8 +457,8 @@ h1 {
 
 .projection-stage img {
   display: block;
-  width: 100%;
-  height: 100%;
+  max-width: calc(var(--app-width) - 36px);
+  max-height: calc(var(--app-height) - 36px);
   object-fit: contain;
   object-position: center;
   border-radius: 8px;
@@ -742,8 +742,8 @@ h1 {
   }
 
   .projection-stage {
-    width: calc(var(--app-width) - 12px);
-    height: calc(var(--app-height) - 12px);
+    width: 100%;
+    height: 100%;
   }
 
   .projection-close {

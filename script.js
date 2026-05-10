@@ -66,6 +66,33 @@ function setViewportSize() {
   document.documentElement.style.setProperty("--app-top", `${top}px`);
 }
 
+function fitProjectionPhoto() {
+  if (!projectionPhoto.naturalWidth || !projectionPhoto.naturalHeight) {
+    return;
+  }
+
+  const viewport = window.visualViewport;
+  const screenWidth = viewport?.width ?? window.innerWidth;
+  const screenHeight = viewport?.height ?? window.innerHeight;
+  const safeInset = Math.max(18, Math.min(screenWidth, screenHeight) * 0.045);
+  const maxWidth = Math.max(240, screenWidth - safeInset * 2);
+  const maxHeight = Math.max(240, screenHeight - safeInset * 2);
+  const imageRatio = projectionPhoto.naturalWidth / projectionPhoto.naturalHeight;
+  const boxRatio = maxWidth / maxHeight;
+
+  let width = maxWidth;
+  let height = maxHeight;
+
+  if (imageRatio > boxRatio) {
+    height = width / imageRatio;
+  } else {
+    width = height * imageRatio;
+  }
+
+  projectionPhoto.style.width = `${Math.floor(width)}px`;
+  projectionPhoto.style.height = `${Math.floor(height)}px`;
+}
+
 const supportedImageFile = (file) =>
   file.type.startsWith("image/") ||
   /\.(jpg|jpeg|jpe|png|webp|gif|bmp|avif|svg|tif|tiff|heic|heif)$/i.test(file.name);
@@ -298,11 +325,13 @@ function showProjectionPhoto(index) {
 
   window.setTimeout(() => {
     projectionPhoto.onload = () => {
+      fitProjectionPhoto();
       projectionPhoto.classList.add("is-visible");
     };
     projectionPhoto.src = photos[projectionIndex].src;
 
     if (projectionPhoto.complete) {
+      fitProjectionPhoto();
       projectionPhoto.classList.add("is-visible");
     }
   }, 120);
@@ -406,9 +435,18 @@ document.addEventListener("keydown", (event) => {
 });
 
 setViewportSize();
-window.addEventListener("resize", setViewportSize);
-window.visualViewport?.addEventListener("resize", setViewportSize);
-window.visualViewport?.addEventListener("scroll", setViewportSize);
+window.addEventListener("resize", () => {
+  setViewportSize();
+  fitProjectionPhoto();
+});
+window.visualViewport?.addEventListener("resize", () => {
+  setViewportSize();
+  fitProjectionPhoto();
+});
+window.visualViewport?.addEventListener("scroll", () => {
+  setViewportSize();
+  fitProjectionPhoto();
+});
 
 quoteText.style.transition = "opacity 180ms ease";
 
