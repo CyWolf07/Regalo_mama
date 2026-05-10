@@ -53,6 +53,19 @@ let db;
 let projectionIndex = 0;
 let projectionTimerId;
 
+function setViewportSize() {
+  const viewport = window.visualViewport;
+  const width = viewport?.width ?? window.innerWidth;
+  const height = viewport?.height ?? window.innerHeight;
+  const left = viewport?.offsetLeft ?? 0;
+  const top = viewport?.offsetTop ?? 0;
+
+  document.documentElement.style.setProperty("--app-width", `${width}px`);
+  document.documentElement.style.setProperty("--app-height", `${height}px`);
+  document.documentElement.style.setProperty("--app-left", `${left}px`);
+  document.documentElement.style.setProperty("--app-top", `${top}px`);
+}
+
 const supportedImageFile = (file) =>
   file.type.startsWith("image/") ||
   /\.(jpg|jpeg|jpe|png|webp|gif|bmp|avif|svg|tif|tiff|heic|heif)$/i.test(file.name);
@@ -317,6 +330,7 @@ function scheduleProjection() {
 }
 
 function openProjection() {
+  setViewportSize();
   projectionOverlay.hidden = false;
   projectionIndex = Math.max(current, 0);
   showProjectionPhoto(projectionIndex);
@@ -390,6 +404,11 @@ document.addEventListener("keydown", (event) => {
     closeProjectionView();
   }
 });
+
+setViewportSize();
+window.addEventListener("resize", setViewportSize);
+window.visualViewport?.addEventListener("resize", setViewportSize);
+window.visualViewport?.addEventListener("scroll", setViewportSize);
 
 quoteText.style.transition = "opacity 180ms ease";
 

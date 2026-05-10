@@ -1,5 +1,9 @@
 :root {
   color-scheme: light;
+  --app-width: 100vw;
+  --app-height: 100vh;
+  --app-left: 0px;
+  --app-top: 0px;
   --ink: #392024;
   --muted: #7d5961;
   --paper: #fff8f8;
@@ -197,7 +201,9 @@ h1 {
 
 .photo-stage {
   position: relative;
-  min-height: 62vh;
+  width: min(100%, calc(var(--app-width) - 28px), 620px);
+  min-height: min(62vh, calc(var(--app-height) - 150px));
+  height: min(72vh, 720px);
   max-height: 720px;
   aspect-ratio: 4 / 5;
   margin-left: auto;
@@ -212,15 +218,18 @@ h1 {
 
 .photo-stage img {
   position: absolute;
-  inset: 18px;
+  top: 50%;
+  left: 50%;
   z-index: 2;
   width: calc(100% - 36px);
   height: calc(100% - 36px);
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   border-radius: 6px;
+  background: rgba(255, 248, 248, 0.54);
   box-shadow: 0 20px 54px rgba(95, 36, 60, 0.24);
   opacity: 0;
-  transform: scale(1.04) translateX(18px);
+  transform: translate(-50%, -50%) scale(1.04);
   transition:
     opacity 650ms ease,
     transform 850ms cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -229,13 +238,13 @@ h1 {
 
 .photo-stage img.is-visible {
   opacity: 1;
-  transform: scale(1) translateX(0);
+  transform: translate(-50%, -50%) scale(1);
   animation: softZoom 5.2s ease both;
 }
 
 .photo-stage img.is-leaving {
   opacity: 0;
-  transform: scale(0.98) translateX(-26px);
+  transform: translate(-50%, -50%) scale(0.98);
   filter: blur(3px);
 }
 
@@ -419,6 +428,14 @@ h1 {
 
 .projection-overlay {
   z-index: 30;
+  top: var(--app-top);
+  left: var(--app-left);
+  right: auto;
+  bottom: auto;
+  width: var(--app-width);
+  height: var(--app-height);
+  min-height: 100dvh;
+  padding: clamp(10px, 2vw, 24px);
   background:
     radial-gradient(circle at 18% 20%, rgba(255, 215, 223, 0.22), transparent 28%),
     radial-gradient(circle at 84% 82%, rgba(255, 244, 216, 0.2), transparent 34%),
@@ -431,16 +448,19 @@ h1 {
 
 .projection-stage {
   position: relative;
-  width: min(94vw, 1500px);
-  height: min(88vh, 920px);
+  width: min(calc(var(--app-width) - 24px), 1500px);
+  height: min(calc(var(--app-height) - 24px), 920px);
   display: grid;
   place-items: center;
+  overflow: hidden;
 }
 
 .projection-stage img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
+  object-position: center;
   border-radius: 8px;
   opacity: 0;
   filter: drop-shadow(0 28px 40px rgba(0, 0, 0, 0.45));
@@ -485,8 +505,8 @@ h1 {
 }
 
 .final-note {
-  right: clamp(14px, 4vw, 44px);
-  bottom: clamp(14px, 4vw, 44px);
+  right: clamp(10px, 3vw, 36px);
+  bottom: clamp(10px, 3vw, 36px);
   width: min(520px, calc(100% - 28px));
   text-align: left;
   animation: messageLift 620ms ease both;
@@ -650,10 +670,10 @@ h1 {
 
 @keyframes softZoom {
   from {
-    transform: scale(1.015) translateX(0);
+    transform: translate(-50%, -50%) scale(1);
   }
   to {
-    transform: scale(1.045) translateX(0);
+    transform: translate(-50%, -50%) scale(1.02);
   }
 }
 
@@ -675,7 +695,8 @@ h1 {
 
   .photo-stage {
     width: 100%;
-    min-height: auto;
+    height: min(68vh, calc(var(--app-height) - 180px));
+    min-height: 420px;
     margin: 0;
   }
 
@@ -689,5 +710,48 @@ h1 {
 
   .upload-actions {
     justify-content: flex-start;
+  }
+}
+
+@media (max-width: 520px) {
+  .page-shell {
+    width: min(100% - 16px, 680px);
+  }
+
+  .photo-stage {
+    height: min(64vh, calc(var(--app-height) - 160px));
+    min-height: 340px;
+  }
+
+  .photo-stage img,
+  .photo-message,
+  .empty-state {
+    inset: 10px;
+  }
+
+  .photo-stage img {
+    top: 50%;
+    left: 50%;
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+  }
+
+  .photo-message {
+    top: auto;
+    padding: 12px 14px;
+  }
+
+  .projection-stage {
+    width: calc(var(--app-width) - 12px);
+    height: calc(var(--app-height) - 12px);
+  }
+
+  .projection-close {
+    top: 10px;
+    right: 10px;
+  }
+
+  .final-note {
+    width: min(420px, calc(100% - 20px));
   }
 }
